@@ -199,7 +199,7 @@ namespace UIInfoSuite.UIElements
             foreach (var character in Game1.currentLocation.characters)
             {
                 if (character is Pet &&
-                    !_helper.Reflection.GetField<bool>(character, "wasPetToday").GetValue())
+                    !WasPetToday((Pet)character))
                 {
                     Vector2 positionAboveAnimal = GetPetPositionAboveAnimal(character);
                     positionAboveAnimal.X += 50f;
@@ -239,5 +239,12 @@ namespace UIInfoSuite.UIElements
 
             return animals;
         }
+
+        private bool WasPetToday(Pet pet)
+        {
+            NetLongDictionary<int, NetInt> lastPettedDays = _helper.Reflection.GetField<NetLongDictionary<int, NetInt>>(pet, "lastPetDay").GetValue();
+            return lastPettedDays.TryGetValue(Game1.player.UniqueMultiplayerID, out int lastDay) && lastDay == Game1.Date.TotalDays;
+        }
+
     }
 }
