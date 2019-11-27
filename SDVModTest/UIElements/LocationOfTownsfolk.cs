@@ -124,7 +124,7 @@ namespace UIInfoSuite.UIElements
             if (Game1.activeClickableMenu is GameMenu)
             {
                 List<IClickableMenu> clickableMenuList = typeof(GameMenu)
-                    .GetField("pages", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetField("pages", BindingFlags.Instance | BindingFlags.Public)
                     .GetValue(Game1.activeClickableMenu) as List<IClickableMenu>;
 
                 foreach (var menu in clickableMenuList)
@@ -132,7 +132,7 @@ namespace UIInfoSuite.UIElements
                     if (menu is SocialPage)
                     {
                         _socialPage = menu as SocialPage;
-                        _friendNames = (typeof(SocialPage).GetField("names", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(menu) as List<object>)
+                        _friendNames = (typeof(SocialPage).GetField("names", BindingFlags.Instance | BindingFlags.Public).GetValue(menu) as List<object>)
                             .Select(name => name.ToString())
                             .ToArray();
                         break;
@@ -423,7 +423,7 @@ namespace UIInfoSuite.UIElements
                             "hoverText",
                             BindingFlags.Instance | BindingFlags.NonPublic)
                         .GetValue(((List<IClickableMenu>)typeof(GameMenu)
-                            .GetField("pages", BindingFlags.Instance | BindingFlags.NonPublic)
+                            .GetField("pages", BindingFlags.Instance | BindingFlags.Public)
                             .GetValue(gameMenu))[gameMenu.currentTab]);
 
                     IClickableMenu.drawHoverText(

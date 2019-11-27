@@ -103,7 +103,7 @@ namespace UIInfoSuite.UIElements
                             }
                         }
 
-                        String hoverText = typeof(GameMenu).GetField("hoverText", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(gameMenu) as String;
+                        String hoverText = typeof(GameMenu).GetField("hoverText", BindingFlags.Instance | BindingFlags.Public).GetValue(gameMenu) as String;
                         IClickableMenu.drawHoverText(
                             Game1.spriteBatch,
                             hoverText,
@@ -129,14 +129,14 @@ namespace UIInfoSuite.UIElements
         {
             if (Game1.activeClickableMenu is GameMenu)
             {
-                List<IClickableMenu> menuList = typeof(GameMenu).GetField("pages", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(Game1.activeClickableMenu) as List<IClickableMenu>;
+                List<IClickableMenu> menuList = typeof(GameMenu).GetField("pages", BindingFlags.Instance | BindingFlags.Public).GetValue(Game1.activeClickableMenu) as List<IClickableMenu>;
 
                 foreach (var menu in menuList)
                 {
                     if (menu is SocialPage page)
                     {
                         _socialPage = page;
-                        _friendNames = (typeof(SocialPage).GetField("names", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(_socialPage) as List<object>)
+                        _friendNames = (typeof(SocialPage).GetField("names", BindingFlags.Instance | BindingFlags.Public).GetValue(_socialPage) as List<object>)
                             .Select(name => name.ToString())
                             .ToArray();
                         break;
